@@ -1,5 +1,7 @@
 package helper
 
+import "fmt"
+
 type Response struct {
 	Meta Meta        `json:"meta"`
 	Data interface{} `json:"data"`
@@ -26,20 +28,28 @@ func APIResponse(message string, code int, status string, data interface{}) Resp
 	return jsonResponse
 }
 
-//func GenerateFibonacci(counter int) int {
-//	split := strings.Split(nickname, "-")
-//	length := len(split) - 1
-//	number := split[length]
-//
-//	i, _ := strconv.Atoi(number)
-//	fibonacci := FibonacciRecursion(i)
-//	fmt.Println(fibonacci)
-//	return nickname
-//}
-
 func FibonacciRecursion(number int) int {
 	if number <= 1 {
 		return number
 	}
 	return FibonacciRecursion(number-1) + FibonacciRecursion(number-2)
+}
+
+func CheckPrime(number int) {
+	isPrime := true
+	if number == 0 || number == 1 {
+		fmt.Printf(" %d is not a  prime number\n", number)
+		isPrime = false
+	} else {
+		for i := 2; i <= number/2; i++ {
+			if number%i == 0 {
+				fmt.Printf(" %d is not a  prime number\n", number)
+				isPrime = false
+				break
+			}
+		}
+		if isPrime == true {
+			fmt.Printf(" %d is a prime number\n", number)
+		}
+	}
 }
