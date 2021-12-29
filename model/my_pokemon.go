@@ -8,6 +8,7 @@ type MyPokemon struct {
 	Nickname      string
 	RealPokemonID int
 	UserID        int
+	Counter       int
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 }

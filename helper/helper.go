@@ -1,11 +1,5 @@
 package helper
 
-import (
-	"fmt"
-	"strconv"
-	"strings"
-)
-
 type Response struct {
 	Meta Meta        `json:"meta"`
 	Data interface{} `json:"data"`
@@ -32,16 +26,16 @@ func APIResponse(message string, code int, status string, data interface{}) Resp
 	return jsonResponse
 }
 
-func GenerateFibonacci(nickname string) string {
-	split := strings.Split(nickname, "-")
-	length := len(split) - 1
-	number := split[length]
-
-	i, _ := strconv.Atoi(number)
-	fibonacci := FibonacciRecursion(i)
-	fmt.Println(fibonacci)
-	return nickname
-}
+//func GenerateFibonacci(counter int) int {
+//	split := strings.Split(nickname, "-")
+//	length := len(split) - 1
+//	number := split[length]
+//
+//	i, _ := strconv.Atoi(number)
+//	fibonacci := FibonacciRecursion(i)
+//	fmt.Println(fibonacci)
+//	return nickname
+//}
 
 func FibonacciRecursion(number int) int {
 	if number <= 1 {

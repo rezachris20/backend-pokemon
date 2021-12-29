@@ -38,5 +38,6 @@ func NewRouter(userController controller.UserController, pokemonController contr
 
 	e.POST("/pokemon/catch/:id", pokemonController.Catch)
 	e.POST("/pokemon/register", pokemonController.Register)
+	e.POST("/pokemon/rename/:id", pokemonController.RenameNickName)
 	return e
 }

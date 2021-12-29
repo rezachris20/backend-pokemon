@@ -9,6 +9,7 @@ import (
 	"pokemon-list/model"
 	"pokemon-list/services"
 	"pokemon-list/web/request"
+	"strconv"
 )
 
 type MyPokemonControllerImpl struct {
@@ -24,6 +25,11 @@ func (m *MyPokemonControllerImpl) Register(c echo.Context) (err error) {
 
 	if err = c.Bind(input); err != nil {
 		response := helper.APIResponse("Failed To Register", http.StatusUnprocessableEntity, "failed", err)
+		return c.JSON(http.StatusUnprocessableEntity, response)
+	}
+
+	if err = c.Validate(input); err != nil {
+		response := helper.APIResponse("Register Failed", http.StatusUnprocessableEntity, "failed", err)
 		return c.JSON(http.StatusUnprocessableEntity, response)
 	}
 
@@ -74,4 +80,36 @@ func (m *MyPokemonControllerImpl) Catch(c echo.Context) error {
 	response := helper.APIResponse("Success To Catch", http.StatusOK, "success", data)
 	return c.JSON(http.StatusBadRequest, response)
 
+}
+
+func (m *MyPokemonControllerImpl) RenameNickName(c echo.Context) (err error) {
+	input := new(request.PokemonRenameInput)
+	if err = c.Bind(input); err != nil {
+		response := helper.APIResponse("Failed To Rename", http.StatusUnprocessableEntity, "failed", err)
+		return c.JSON(http.StatusUnprocessableEntity, response)
+	}
+
+	if err = c.Validate(input); err != nil {
+		response := helper.APIResponse("Register Failed", http.StatusUnprocessableEntity, "failed", err)
+		return c.JSON(http.StatusUnprocessableEntity, response)
+	}
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	cekID, err := m.service.FindByID(id)
+	if cekID.ID == 0 {
+		response := helper.APIResponse("Failed To Rename", http.StatusNotFound, "false", nil)
+		return c.JSON(http.StatusNotFound, response)
+	}
+	if err != nil {
+		response := helper.APIResponse("Failed To Rename", http.StatusNotFound, "false", nil)
+		return c.JSON(http.StatusNotFound, response)
+	}
+	renamePokemon, err := m.service.Rename(cekID.ID, input)
+	if err != nil {
+		response := helper.APIResponse("Failed To Rename", http.StatusUnprocessableEntity, "failed", err)
+		return c.JSON(http.StatusUnprocessableEntity, response)
+	}
+
+	response := helper.APIResponse("Success To Rename", http.StatusOK, "success", renamePokemon)
+	return c.JSON(http.StatusOK, response)
 }
