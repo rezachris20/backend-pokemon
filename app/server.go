@@ -7,5 +7,5 @@ import (
 )
 
 func NewServer(router *echo.Echo) *http.Server {
-	return &http.Server{Addr: ":1323", Handler: router}
+	return &http.Server{Addr: ":1324", Handler: router}
 }

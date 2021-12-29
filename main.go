@@ -1,28 +1,27 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"pokemon-list/injector"
+	"strconv"
 )
 
+func FibonacciRecursion(n int) int {
+	if n <= 1 {
+		return n
+	}
+	return FibonacciRecursion(n-1) + FibonacciRecursion(n-2)
+}
+
 func main() {
-	// e := echo.New()
-	// e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-	// 	AllowOrigins: []string{"*"},
-	// 	AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
-	// }))
 
-	// e.GET("/pokemon", controller.GetPokemon)
-	// e.GET("/pokemon/:name", controller.DetailPokemon)
+	for i := 0; i <= 9; i++ {
+		fmt.Print(strconv.Itoa(FibonacciRecursion(i)) + " ")
+	}
+	fmt.Println("")
 
-	// e.Logger.Fatal(e.Start(":1323"))
-	// db := app.NewDB()
-	// userRepository := repository.NewUserRepository(db)
-	// userService := services.NewUserService(userRepository)
-	// userController := controller.NewUserController(userService)
-	// router := app.NewRouter(userController)
-	// server := app.NewServer(router)
 	s := injector.InitializedServer()
 	if err := s.ListenAndServe(); err != http.ErrServerClosed {
 		log.Fatal(err)

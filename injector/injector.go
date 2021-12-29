@@ -19,10 +19,17 @@ var userSet = wire.NewSet(
 	controller.NewUserController,
 )
 
+var myPokemonSet = wire.NewSet(
+	repository.NewMyPokemonRepository,
+	services.NewMyPokemonService,
+	controller.NewMyPokemonController,
+)
+
 func InitializedServer() *http.Server {
 	wire.Build(
 		app.NewDB,
 		userSet,
+		myPokemonSet,
 		app.NewRouter,
 		app.NewServer,
 	)

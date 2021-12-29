@@ -22,7 +22,10 @@ func InitializedServer() *http.Server {
 	userRepository := repository.NewUserRepository(db)
 	userService := services.NewUserService(userRepository)
 	userController := controller.NewUserController(userService)
-	echo := app.NewRouter(userController)
+	myPokemonRepository := repository.NewMyPokemonRepository(db)
+	myPokemonService := services.NewMyPokemonService(myPokemonRepository)
+	myPokemonController := controller.NewMyPokemonController(myPokemonService)
+	echo := app.NewRouter(userController, myPokemonController)
 	server := app.NewServer(echo)
 	return server
 }
@@ -30,3 +33,5 @@ func InitializedServer() *http.Server {
 // injector.go:
 
 var userSet = wire.NewSet(repository.NewUserRepository, services.NewUserService, controller.NewUserController)
+
+var myPokemonSet = wire.NewSet(repository.NewMyPokemonRepository, services.NewMyPokemonService, controller.NewMyPokemonController)

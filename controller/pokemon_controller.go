@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"pokemon-list/entity"
+	"pokemon-list/model"
 
 	"github.com/labstack/echo/v4"
 )
@@ -25,7 +25,7 @@ func GetPokemon(c echo.Context) error {
 
 	defer resp.Body.Close()
 
-	var data entity.ResponsePokemon
+	var data model.ResponsePokemon
 
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
@@ -51,7 +51,7 @@ func DetailPokemon(c echo.Context) error {
 
 	defer resp.Body.Close()
 
-	var data entity.ResponseDetailPokemon
+	var data model.ResponseDetailPokemon
 
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
 		return c.JSON(http.StatusBadRequest, err)

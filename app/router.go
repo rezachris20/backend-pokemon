@@ -20,7 +20,7 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 	return nil
 }
 
-func NewRouter(userController controller.UserController) *echo.Echo {
+func NewRouter(userController controller.UserController, pokemonController controller.MyPokemonController) *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
@@ -35,5 +35,8 @@ func NewRouter(userController controller.UserController) *echo.Echo {
 
 	e.GET("/pokemon", controller.GetPokemon)
 	e.GET("/pokemon/:name", controller.DetailPokemon)
+
+	e.POST("/pokemon/catch/:id", pokemonController.Catch)
+	e.POST("/pokemon/register", pokemonController.Register)
 	return e
 }

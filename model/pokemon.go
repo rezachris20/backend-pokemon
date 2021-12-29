@@ -1,4 +1,4 @@
-package entity
+package model
 
 type ResponsePokemon struct {
 	Count   int      `json:"count"`
@@ -11,6 +11,8 @@ type Result struct {
 }
 
 type ResponseDetailPokemon struct {
+	ID      int     `json:"id"`
+	Name    string  `json:"name"`
 	Types   []Types `json:"types"`
 	Moves   []Moves `json:"moves"`
 	Sprites Sprites `json:"sprites"`
