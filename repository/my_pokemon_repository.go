@@ -6,4 +6,6 @@ type MyPokemonRepository interface {
 	Save(myPokemon model.MyPokemon) (model.MyPokemon, error)
 	Update(ID int, myPokemon model.MyPokemon) (model.MyPokemon, error)
 	FindByID(ID int) (model.MyPokemon, error)
+	FindByUserID(ID int) ([]model.MyPokemon, error)
+	Delete(ID int) (bool, error)
 }

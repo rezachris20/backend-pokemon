@@ -11,4 +11,5 @@ type MyPokemon struct {
 	Counter       int
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
+	ImageURL      string
 }

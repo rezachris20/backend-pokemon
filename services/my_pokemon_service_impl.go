@@ -23,6 +23,7 @@ func (m *MyPokemonServiceImpl) Register(payload *request.PokemonRegisterInput) (
 		Nickname:      payload.NickName + "-0",
 		RealPokemonID: payload.PokemonID,
 		UserID:        payload.UserID,
+		ImageURL:      payload.ImageURL,
 	}
 
 	save, err := m.repository.Save(*myPokemon)
@@ -59,4 +60,21 @@ func (m *MyPokemonServiceImpl) FindByID(ID int) (response.MyPokemonResponse, err
 		return response.ToMyPokemonResponse(pokemon), err
 	}
 	return response.ToMyPokemonResponse(pokemon), nil
+}
+
+func (m *MyPokemonServiceImpl) FindPokemonByUserID(userID int) ([]response.MyPokemonResponse, error) {
+	pokemons, err := m.repository.FindByUserID(userID)
+	if err != nil {
+		return response.ToMyPokemonResponses(pokemons), err
+	}
+
+	return response.ToMyPokemonResponses(pokemons), nil
+}
+
+func (m *MyPokemonServiceImpl) DeletePokemon(pokemonID int) (bool, error) {
+	_, err := m.repository.Delete(pokemonID)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }

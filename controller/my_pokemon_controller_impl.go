@@ -78,7 +78,7 @@ func (m *MyPokemonControllerImpl) Catch(c echo.Context) error {
 	}
 
 	response := helper.APIResponse("Success To Catch", http.StatusOK, "success", data)
-	return c.JSON(http.StatusBadRequest, response)
+	return c.JSON(http.StatusOK, response)
 
 }
 
@@ -111,5 +111,48 @@ func (m *MyPokemonControllerImpl) RenameNickName(c echo.Context) (err error) {
 	}
 
 	response := helper.APIResponse("Success To Rename", http.StatusOK, "success", renamePokemon)
+	return c.JSON(http.StatusOK, response)
+}
+
+func (m *MyPokemonControllerImpl) FindAllPokemonByUserID(c echo.Context) error {
+	userID, err := strconv.Atoi(c.Param("user_id"))
+	if err != nil {
+		response := helper.APIResponse("Load Data Failed", http.StatusUnprocessableEntity, "failed", err)
+		return c.JSON(http.StatusUnprocessableEntity, response)
+	}
+	pokemons, err := m.service.FindPokemonByUserID(userID)
+	if err != nil {
+		response := helper.APIResponse("Load Data Failed", http.StatusBadRequest, "failed", err)
+		return c.JSON(http.StatusBadRequest, response)
+	}
+
+	response := helper.APIResponse("Success To Load", http.StatusOK, "success", pokemons)
+	return c.JSON(http.StatusOK, response)
+}
+
+func (m *MyPokemonControllerImpl) ReleasePokemon(c echo.Context) error {
+	pokemonID, err := strconv.Atoi(c.Param("pokemon_id"))
+	if err != nil {
+		response := helper.APIResponse("Release Failed", http.StatusUnprocessableEntity, "failed", nil)
+		return c.JSON(http.StatusUnprocessableEntity, response)
+	}
+
+	min := 1
+	max := 100
+
+	number := rand.Intn(max-min) + min
+	isPrime := helper.CheckPrime(number)
+	if !isPrime {
+		response := helper.APIResponse("Release Failed", http.StatusUnprocessableEntity, "failed", nil)
+		return c.JSON(http.StatusUnprocessableEntity, response)
+	}
+
+	_, err = m.service.DeletePokemon(pokemonID)
+	if err != nil {
+		response := helper.APIResponse("Release Failed", http.StatusUnprocessableEntity, "failed", nil)
+		return c.JSON(http.StatusUnprocessableEntity, response)
+	}
+
+	response := helper.APIResponse("Success Release", http.StatusOK, "success", nil)
 	return c.JSON(http.StatusOK, response)
 }

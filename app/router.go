@@ -36,8 +36,10 @@ func NewRouter(userController controller.UserController, pokemonController contr
 	e.GET("/pokemon", controller.GetPokemon)
 	e.GET("/pokemon/:name", controller.DetailPokemon)
 
-	e.POST("/pokemon/catch/:id", pokemonController.Catch)
+	e.GET("/pokemon/catch/:id", pokemonController.Catch)
 	e.POST("/pokemon/register", pokemonController.Register)
 	e.POST("/pokemon/rename/:id", pokemonController.RenameNickName)
+	e.GET("/pokemon/list/:user_id", pokemonController.FindAllPokemonByUserID)
+	e.DELETE("/pokemon/release/:pokemon_id", pokemonController.ReleasePokemon)
 	return e
 }

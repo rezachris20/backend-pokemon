@@ -5,6 +5,7 @@ type PokemonRegisterInput struct {
 	PokemonName string `json:"pokemon_name" validate:"required"`
 	NickName    string `json:"nick_name" validate:"required"`
 	UserID      int    `json:"user_id" validate:"required"`
+	ImageURL    string `json:"image_url" validate:"required"`
 }
 
 type PokemonRenameInput struct {

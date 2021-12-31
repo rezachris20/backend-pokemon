@@ -39,3 +39,22 @@ func (m *MyPokemonRepositoryImpl) FindByID(ID int) (model.MyPokemon, error) {
 	}
 	return pokemon, nil
 }
+
+func (m *MyPokemonRepositoryImpl) FindByUserID(ID int) ([]model.MyPokemon, error) {
+	var pokemons []model.MyPokemon
+	err := m.db.Where("user_id = ?", ID).Find(&pokemons).Error
+	if err != nil {
+		return pokemons, err
+	}
+
+	return pokemons, nil
+}
+
+func (m *MyPokemonRepositoryImpl) Delete(ID int) (bool, error) {
+	var pokemon model.MyPokemon
+	err := m.db.Where("id = ?", ID).Delete(&pokemon)
+	if err != nil {
+		return false, nil
+	}
+	return true, nil
+}
