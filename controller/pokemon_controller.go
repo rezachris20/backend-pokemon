@@ -11,7 +11,7 @@ import (
 
 func GetPokemon(c echo.Context) error {
 
-	req, err := http.NewRequest("GET", "https://pokeapi.co/api/v2/pokemon", nil)
+	req, err := http.NewRequest("GET", "https://pokeapi.co/api/v2/pokemon?limit=100", nil)
 	if err != nil {
 		fmt.Println("Error is req: ", err)
 	}
